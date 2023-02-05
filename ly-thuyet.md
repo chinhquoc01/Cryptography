@@ -1,0 +1,37 @@
+# PKC
+## Nguyên lý
+- Public key để mã hoá, private key để giải mã
+## Một số giải thuật
+- Trapdor knapsack (merkle hellman)
+  - Bài toán đóng thùng: Có bao đựng đồ 20kg, hỏi xem bao nhiêu thứ đút vừa bao sao cho trị giá lớn nhất
+    - Là bài toán khó, phải vét cạn
+  - Thuật toán mã khối PKC:
+    - Cho vector mang a = ($a_1$, $a_2$, $a_3$,...)
+    - Với khối tin nhị phân X = (X1, X2, X3, ...)
+    - Mã hoá: T = Tổng $a_i$ * $X_i$
+    - Giải mã: Cho mã T, vector mang a, tìm các $X_i$ thoả mã T
+    - Merkle sử dụng vector siêu tăng (phần tử sau lớn hơn tổng tất cả phần tử đúng trc) để giải mã dễ dàng hơn bằng việc mò từ cuối
+  - Tạo khoá:
+    - Chọn vector siêu tăng a' = (a1', a2', ...) (a' được giữ bí mật)
+    - Chọn số nguyên m > $\sum a_i'$, chọn số nguyên ngẫu nhiên $\omega$ sau cho nguyên tố cùng nhau với m
+    - Khoá công khai là a = (a1,a2,a3...) sao cho $a_i$ = $a_i'$ * $\omega$ mod m
+    - Khoá bí mật: (a', m, $\omega$)
+  - Mã hoá bản tin X = (X1, X2, X3,...):
+    - T = $(\sum a_i X_i) \bmod m$
+  - Giải mã 
+    - Tìm nghịch đảo $\omega'$ của $\omega$ theo m: $\omega'$ $\omega$ $\bmod$ m = 1
+    - T' = T $\omega'$ mod m = a' X => giải dc X theo siêu tăng a' 
+  - Bài tập: Cho A' = (2,3,6,12,25), n = 5, m = 53, $\omega$ = 46, $\omega'$ = 15
+    - Khoá công khai
+      - A1 = 2 * 46 mod 53 = 39
+      - A2 = 3 * 46 mod 53 = 32
+      - A3 = 11
+      - A4 = 22 
+      - A5 = 37
+      - A = (39,32,11,22,37)
+    - Khoá bí mật: (A', m , $\omega$)
+    - Mã hoá M = 01001: T = $(\sum a_i M_i) \bmod m$ = (0\*39 + 1\*32 + 0\*11 + 0\*22 + 1\*37) mod 53 = 16
+    - Giải mã: T' = T * $\omega'$ mod m = 16\*15 mod 53 = 28
+- RSA
+  - 
+- Elgama
